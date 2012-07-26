@@ -3,30 +3,37 @@
  * 
  * Michael Marner
  */
- 
-int inByte = 0;
+
+
+#include <Servo.h>
+
+Servo peltier;
+
 char data[64];
 char firstByte;
 int bytesRead = 0;
 
-int goal = 0;
+int goal = 23;
+float temperature;
+int power;
 
-int sensorValue = 0;
-int ledPin = 9;
+int ledPin = 11;
 int sensorPin = 0;
+int servoPin = 10;
 int temp = 0;
 
 void setup() 
 {
-  pinMode(ledPin, OUTPUT);
-  
+  pinMode(ledPin, OUTPUT);  
   Serial.begin(9600);
   while (!Serial) {}
+  
+  peltier.attach(servoPin);
 }
 
 
 void loop() {
-  float temperature = getVoltage(sensorPin);
+  temperature = getVoltage(sensorPin);
   temperature = (temperature - 0.5) * 100;
   delay(10);
   if (Serial.available() > 0)
@@ -51,10 +58,27 @@ void loop() {
       if (bytesRead > 0) {
         goal = atoi(data);
         analogWrite(ledPin, goal);
-        //Serial.write("OK\n");
       }
     }
   }
+  dealwithPeltier();
+}
+
+
+void dealWithPeltier() {
+  // difference between goal and current temp...
+  float diff =  goal - temperature;
+  
+  // increase if goal is greater than current temperature
+  if (diff < - 1 && power > 0) {
+    power -= 1;
+    peltier.write(power);
+  }
+  // otherwise decrease
+  else if (diff > 1 && power < 180) {
+    power += 1;
+    peltier.write(power);
+  }    
 }
 
 float getVoltage(int pin) {
