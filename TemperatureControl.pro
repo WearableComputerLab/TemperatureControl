@@ -11,8 +11,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    TemperatureIO.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    TemperatureIO.h
 
 FORMS    += mainwindow.ui
+
+CONFIG += link_pkgconfig
+PKGCONFIG += libwcl

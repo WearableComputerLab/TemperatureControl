@@ -1,7 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "TemperatureIO.h"
+
 #include <QMainWindow>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +20,11 @@ public:
     
 private:
     Ui::MainWindow *ui;
+    QTimer ioTimer;
+    TemperatureIO tempIO;
+
+public slots:
+    void connectButtonHandler();
 };
 
 #endif // MAINWINDOW_H

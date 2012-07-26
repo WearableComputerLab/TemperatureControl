@@ -33,6 +33,9 @@
      <string>Control</string>
     </property>
     <widget class="QSlider" name="tempSlider">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -120,6 +123,9 @@
      </property>
     </widget>
     <widget class="QProgressBar" name="tempBar">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -139,9 +145,9 @@
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>210</x>
       <y>10</y>
-      <width>141</width>
+      <width>191</width>
       <height>61</height>
      </rect>
     </property>
@@ -149,11 +155,14 @@
      <string>Desired Temperature</string>
     </property>
     <widget class="QLabel" name="desiredLabel">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>30</y>
-       <width>101</width>
+       <width>171</width>
        <height>21</height>
       </rect>
      </property>
@@ -165,7 +174,7 @@
       </font>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -175,9 +184,9 @@
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>210</x>
       <y>90</y>
-      <width>141</width>
+      <width>191</width>
       <height>61</height>
      </rect>
     </property>
@@ -185,11 +194,14 @@
      <string>Actual Temperature</string>
     </property>
     <widget class="QLabel" name="actualLabel">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>25</y>
-       <width>121</width>
+       <width>171</width>
        <height>31</height>
       </rect>
      </property>
@@ -201,7 +213,7 @@
       </font>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -209,17 +221,46 @@
     </widget>
    </widget>
    <widget class="QPushButton" name="connectButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>170</y>
-      <width>141</width>
+      <x>210</x>
+      <y>250</y>
+      <width>191</width>
       <height>32</height>
      </rect>
     </property>
     <property name="text">
      <string>Connect</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_5">
+    <property name="geometry">
+     <rect>
+      <x>209</x>
+      <y>170</y>
+      <width>191</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Serial Connection</string>
+    </property>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>30</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>/dev/ttyUSB0</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
