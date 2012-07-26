@@ -261,7 +261,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>/dev/ttyUSB0</string>
+      <string>/dev/tty.usbmodemfd131</string>
      </property>
     </widget>
    </widget>
