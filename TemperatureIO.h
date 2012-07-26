@@ -47,7 +47,7 @@ public slots:
     void doIO();
 
 signals:
-    void temperatureChanged(int newTemperature);
+    void temperatureChanged(float newTemperature);
     void connecting();
     void connected();
     void disconnected();

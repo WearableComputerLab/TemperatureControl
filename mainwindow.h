@@ -59,7 +59,7 @@ public slots:
     void handleConnecting();
     void handleDisconnected();
     void handleSlider(int value);
-    void handleTemperatureChange(int newTemp);
+    void handleTemperatureChange(float newTemp);
 };
 
 #endif // MAINWINDOW_H

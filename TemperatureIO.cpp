@@ -56,11 +56,11 @@ void TemperatureIO::doIO()
 {
     // get the temperature;
     char result[7];
-    int temp = 0;
+    float temp = 0;
     mConnection.write("G\n");
     mConnection.drain();
-    mConnection.read(result, 5);
-    sscanf(result, "%d\n", &temp);
+    mConnection.read(result, 6);
+    sscanf(result, "%f\n", &temp);
     if (temp != mCurrentTemperature)
     {
         mCurrentTemperature = temp;

@@ -26,7 +26,8 @@ void setup()
 
 
 void loop() {
-  sensorValue = analogRead(sensorPin);
+  float temperature = getVoltage(sensorPin);
+  temperature = (temperature - 0.5) * 100;
   delay(10);
   if (Serial.available() > 0)
   {
@@ -34,12 +35,14 @@ void loop() {
 
     if (firstByte == 'G') {
       bytesRead = Serial.readBytesUntil('\n', data, 63);
-      temp = sensorValue;
-      while (temp < 1000) {
+      
+      temp = temperature;
+      while (temp < 100) {
         Serial.print(" ");
         temp *= 10;
       }
-      Serial.print(sensorValue);
+      
+      Serial.print(temperature, 1);
       Serial.write("\n");
     }
     else if (firstByte == 'S') {
@@ -54,7 +57,9 @@ void loop() {
   }
 }
 
-
+float getVoltage(int pin) {
+  return (analogRead(pin) * 0.004882814);
+}
   
   
   

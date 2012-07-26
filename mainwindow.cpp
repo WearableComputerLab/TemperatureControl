@@ -64,8 +64,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&tempIO, SIGNAL(disconnected()),
                      this, SLOT(handleDisconnected()));
 
-    QObject::connect(&tempIO, SIGNAL(temperatureChanged(int)),
-                     this, SLOT(handleTemperatureChange(int)));
+    QObject::connect(&tempIO, SIGNAL(temperatureChanged(float)),
+                     this, SLOT(handleTemperatureChange(float)));
 }
 
 MainWindow::~MainWindow()
@@ -103,7 +103,7 @@ void MainWindow::handleConnecting()
 }
 
 
-void MainWindow::handleTemperatureChange(int newTemperature) {
+void MainWindow::handleTemperatureChange(float newTemperature) {
     ui->tempBar->setValue(newTemperature);
     ui->actualLabel->setText(QString::number(newTemperature) + QString::fromUtf8("°C"));
 }
