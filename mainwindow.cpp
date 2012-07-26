@@ -105,12 +105,12 @@ void MainWindow::handleConnecting()
 
 void MainWindow::handleTemperatureChange(int newTemperature) {
     ui->tempBar->setValue(newTemperature);
-    ui->actualLabel->setText(QString::number(newTemperature));
+    ui->actualLabel->setText(QString::number(newTemperature) + QString::fromUtf8("°C"));
 }
 
 
 void MainWindow::handleSlider(int value) {
-    ui->goalLabel->setText(QString::number(value));
+    ui->goalLabel->setText(QString::number(value) + QString::fromUtf8("°C"));
     tempIO.setTemperature(value);
 }
 
