@@ -19,12 +19,12 @@ int power;
 
 int ledPin = 11;
 int sensorPin = 0;
-int servoPin = 10;
+int servoPin = 9;
 int temp = 0;
 
 void setup() 
 {
-  pinMode(ledPin, OUTPUT);  
+  //pinMode(ledPin, OUTPUT);  
   Serial.begin(9600);
   while (!Serial) {}
   
@@ -57,27 +57,31 @@ void loop() {
       data[bytesRead] = 0;
       if (bytesRead > 0) {
         goal = atoi(data);
-        analogWrite(ledPin, goal);
+        //analogWrite(ledPin, goal);
       }
     }
   }
-  dealwithPeltier();
+  dealWithPeltier();
 }
 
 
 void dealWithPeltier() {
   // difference between goal and current temp...
-  float diff =  goal - temperature;
+  //float diff =  goal - temperature;
   
   // increase if goal is greater than current temperature
-  if (diff < - 1 && power > 0) {
-    power -= 1;
+  if (temperature < goal) {
+    //power -= 1;
+    power = 180;
     peltier.write(power);
+    delay(10);
   }
   // otherwise decrease
-  else if (diff > 1 && power < 180) {
-    power += 1;
+  else if (temperature > goal) {
+    //power += 1;
+    power = 0;
     peltier.write(power);
+    delay(10);
   }    
 }
 
