@@ -105,7 +105,7 @@ void MainWindow::handleConnecting()
 
 void MainWindow::handleTemperatureChange(float newTemperature) {
     ui->tempBar->setValue(newTemperature);
-    ui->actualLabel->setText(QString::number(newTemperature) + QString::fromUtf8("°C"));
+    ui->actualLabel->setText(QString::number(newTemperature, 'f', 2) + QString::fromUtf8("°C"));
 }
 
 

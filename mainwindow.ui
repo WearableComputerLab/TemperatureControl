@@ -45,7 +45,7 @@
       </rect>
      </property>
      <property name="minimum">
-      <number>10</number>
+      <number>-10</number>
      </property>
      <property name="maximum">
       <number>40</number>
@@ -83,7 +83,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>10C</string>
+      <string>-10C</string>
      </property>
     </widget>
    </widget>
@@ -122,7 +122,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>10C</string>
+      <string>-10C</string>
      </property>
     </widget>
     <widget class="QProgressBar" name="tempBar">
@@ -138,7 +138,7 @@
       </rect>
      </property>
      <property name="minimum">
-      <number>10</number>
+      <number>-10</number>
      </property>
      <property name="maximum">
       <number>40</number>
