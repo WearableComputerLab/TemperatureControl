@@ -4,38 +4,74 @@
  * Michael Marner
  */
 
+#define TEMP_BUFFER_SIZE 50
 
 #include <Servo.h>
 
+/**
+ * What mode are we operating in? By default, we do nothing!
+ */
+enum {
+  WAITING,
+  GOAL,
+  POWER,
+  DEMO
+} mode = WAITING;
+
+
+/*
+ * Peltier current controller
+ */
+int sensorPin = 0;
+int servoPin = 9;
 Servo peltier;
 
 char data[64];
 char firstByte;
 int bytesRead = 0;
 
-int goal = 23;
-float temperature;
+float goal;
+
 int power;
 
-int ledPin = 11;
-int sensorPin = 0;
-int servoPin = 9;
-int temp = 0;
+float tempReadings[TEMP_BUFFER_SIZE];
+int nextIndex = 0;
+int numReadings = 0;
+float smoothedTemperature = 0;
 
-void setup() 
+
+void setup()
 {
-  //pinMode(ledPin, OUTPUT);  
   Serial.begin(9600);
   while (!Serial) {}
-  
   peltier.attach(servoPin);
 }
 
 
 void loop() {
-  temperature = getVoltage(sensorPin);
-  temperature = (temperature - 0.5) * 100;
-  delay(10);
+  updateTemperature();
+  doIO();
+  
+  switch (mode)
+  {
+    case WAITING:
+      power = 90;
+      goForPower();
+      break;
+    case GOAL:
+      attackGoalTemperature();
+      break;
+    case POWER:
+      goForPower();
+      break;
+    case DEMO:
+      break;
+  }
+}
+
+
+void doIO()
+{
   if (Serial.available() > 0)
   {
     firstByte = Serial.read();
@@ -43,13 +79,7 @@ void loop() {
     if (firstByte == 'G') {
       bytesRead = Serial.readBytesUntil('\n', data, 63);
       
-      temp = temperature;
-      while (temp < 100) {
-        Serial.print(" ");
-        temp *= 10;
-      }
-      
-      Serial.print(temperature, 1);
+      Serial.print(smoothedTemperature, 2);
       Serial.write("\n");
     }
     else if (firstByte == 'S') {
@@ -61,23 +91,58 @@ void loop() {
       }
     }
   }
-  dealWithPeltier();
+}
+
+void goForPower() {
+  peltier.write(power);
+  delay(10);
+}
+
+void updateTemperature() {
+  tempReadings[nextIndex] = getVoltage(sensorPin);
+  tempReadings[nextIndex] = (tempReadings[nextIndex] - 0.5) * 100;
+  
+  if (numReadings < TEMP_BUFFER_SIZE)
+    numReadings++;
+    
+  nextIndex++;
+  if (nextIndex == TEMP_BUFFER_SIZE)
+    nextIndex = 0;
+    
+ smoothedTemperature = getSmoothedTemperature();
 }
 
 
-void dealWithPeltier() {
+float getSmoothedTemperature() {
+  if (numReadings == 0) {
+    updateTemperature();
+    return getSmoothedTemperature();
+  }
+  
+  float temp;
+  for (int i=0; i < numReadings; i++) {
+    temp += tempReadings[i];
+  }
+  return temp / numReadings;
+}
+    
+
+
+
+
+void attackGoalTemperature() {
   // difference between goal and current temp...
   //float diff =  goal - temperature;
   
   // increase if goal is greater than current temperature
-  if (temperature < goal) {
+  if (smoothedTemperature < goal) {
     //power -= 1;
     power = 180;
     peltier.write(power);
     delay(10);
   }
   // otherwise decrease
-  else if (temperature > goal) {
+  else if (smoothedTemperature > goal) {
     //power += 1;
     power = 0;
     peltier.write(power);
