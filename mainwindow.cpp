@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
         isConnected(false)
 {
+    status = new QLabel();
     ui->setupUi(this);
 
     this->statusBar()->addWidget(status);
