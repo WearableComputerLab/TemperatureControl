@@ -24,6 +24,7 @@
 // authors and should not be interpreted as representing official policies, either expressed
 // or implied, of the authors.
 
+#include <cstdio>
 #include <iostream>
 #include <sstream>
 
