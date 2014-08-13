@@ -43,7 +43,7 @@ float smoothedTemperature = 0;
 void setup()
 {
   Serial.begin(9600);
-  while (!Serial) {}
+  //while (!Serial) {}
   peltier.attach(servoPin);
 }
 
@@ -87,6 +87,7 @@ void doIO()
       data[bytesRead] = 0;
       if (bytesRead > 0) {
         goal = atoi(data);
+        mode = GOAL;
         //analogWrite(ledPin, goal);
       }
     }
