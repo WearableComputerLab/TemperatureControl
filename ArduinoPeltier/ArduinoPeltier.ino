@@ -244,19 +244,16 @@ float getVoltage(int pin) {
 int outputPower() {
   float difference = goal - smoothTemperature;
   
-  //float diffCalc = difference;
-  //if(diffCalc < 0)
-  //  diffCalc * -1;
+  float diffCalc = difference;
+  if(diffCalc < 0)
+    diffCalc * -1;
   
   if(difference > 10)
     return 180;
   else if(difference < -10) {
     return 0;
-  else if(difference < 0) {
-    return 0;
-  }
   else {
-    return 180 * (difference / 10);
+    return 90 + (90 * (difference / 10));
   }
   
 }
