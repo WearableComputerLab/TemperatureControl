@@ -215,7 +215,7 @@ void attackGoalTemperature() {
   // difference between goal and current temp...
   //float diff =  goal - temperature;
   
-  // increase if goal is greater than current temperature
+  /* increase if goal is greater than current temperature
   if (smoothedTemperature < goal) {
     //power -= 1;
     power = 180;
@@ -228,7 +228,12 @@ void attackGoalTemperature() {
     power = 0;
     peltier.write(power);
     delay(10);
-  }    
+  }*/
+
+  //Use a inversal method to change the power.
+  power = outputPower();
+  peltier.write(power);
+  delay(10);  
 }
 
 /**
