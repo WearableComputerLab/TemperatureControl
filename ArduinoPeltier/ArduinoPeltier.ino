@@ -238,5 +238,26 @@ float getVoltage(int pin) {
   return (analogRead(pin) * 0.004882814);
 }
   
+/**
+ * Return the output power relative to the difference between current smoothed temp and the goal temp.
+ */
+int outputPower() {
+  float difference = goal - smoothTemperature;
   
+  //float diffCalc = difference;
+  //if(diffCalc < 0)
+  //  diffCalc * -1;
+  
+  if(difference > 10)
+    return 180;
+  else if(difference < -10) {
+    return 0;
+  else if(difference < 0) {
+    return 0;
+  }
+  else {
+    return 180 * (difference / 10);
+  }
+  
+}
   
